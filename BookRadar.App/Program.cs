@@ -1,9 +1,22 @@
 ﻿using BookRadar.App;
-using System.Text.Json;
-using var db = new AppDbContext();
-using var http = new HttpClient();
+using Microsoft.EntityFrameworkCore;
 
-var json = await http.GetStringAsync("https://openlibrary.org/search.json?title=mistborn&limit=1");
+using var db = new AppDbContext();
+db.Database.Migrate();
+using var http = new HttpClient();
+var client = new OpenLibraryClient(http);
+var importer = new BookImporter(db);
+
+var generos = new[] { "fantasy", "fiction", "programming" };
+
+foreach(var genero in generos)
+{
+    var docs = await client.SearchBySubjectAsync(genero);
+    importer.Import(docs);
+}
+
+Console.WriteLine($"{db.Books.Count()} books");
+
 // Console.WriteLine(json);
 /*var books = new Book { Title = "Mistborn", Author = "Brandon Sanderson" };
 db.Books.Add(books);
@@ -13,7 +26,6 @@ foreach(var book in booksDB)
 {
     Console.WriteLine($"Me encanta {book.Title}, de {book.Author}");
 }*/
-var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-var response = JsonSerializer.Deserialize<OpenLibraryDTO>(json, options);
+
 
 

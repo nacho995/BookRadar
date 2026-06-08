@@ -15,10 +15,10 @@ public class BookImporter
         {
             foreach (var doc in docs)
             {
+                if (doc.AuthorName is null || doc.AuthorName.Count == 0) continue;
                 var book = BookMapper.ToBook(doc);
                 bool yaExiste = _db.Books.Any(x => x.OpenLibraryKey == doc.Key);
                 if (!yaExiste) _db.Books.Add(book);
-
             }
             _db.SaveChanges();
         }

@@ -1,0 +1,20 @@
+using System.Net;
+
+public class FakeHttpMessageHandler : HttpMessageHandler
+{
+    private readonly Queue<string> _respuestas;
+
+    public FakeHttpMessageHandler(params string[] respuestasJson)
+        => _respuestas = new Queue<string>(respuestasJson);
+
+    protected override Task<HttpResponseMessage> SendAsync(
+        HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        // devuelve la siguiente respuesta de la cola; si se acaban, una página vacía
+        var json = _respuestas.Count > 0 ? _respuestas.Dequeue() : "{\"docs\":[]}";
+        return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(json)
+        });
+    }
+}

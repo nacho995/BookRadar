@@ -10,7 +10,7 @@ public class BookImporterTest{
 public void Import_NoDuplica_CuandoSeImportaElMismoLibroDosVeces()
 {
     
-    var doc = new BookDoc { Key = "/works/OL16044142W" };
+    var doc = new BookDoc { Key = "/works/OL16044142W" , AuthorName = new List<string> { "Brandon Sanderson" } };
 
         // --- Arrange: BBDD SQLite en memoria ---
         var connection = new SqliteConnection("Data Source=:memory:");

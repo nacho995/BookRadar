@@ -6,7 +6,7 @@ public class AppDbContext : DbContext
 {
     public AppDbContext() { }
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-    public DbSet<Book> Books { get; set;} = null!;
+    public DbSet<Book> Books { get; set; } = null!;
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured){
