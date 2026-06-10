@@ -44,4 +44,23 @@ public class OpenLibraryClient
 }
         return resultados.Take(max).ToList();
     }
+    public async Task<string?> GetWorkDescriptionAsync(string key)  
+    {
+        // 1. TRAER — igual que en Search: URL + pipeline
+        var url = $"https://openlibrary.org{key}.json";
+        var json = await _pipeline.ExecuteAsync(async ct => await _http.GetStringAsync(url, ct));
+
+        // 2. DESERIALIZAR — igual que siempre; DE AQUÍ SALE 'work'
+        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        var work = JsonSerializer.Deserialize<WorkDto>(json, options);
+        if (work is null) return null;
+
+        // 3. EXTRAER — el switch que ya tenías, devolviendo directamente
+        return work.Description.ValueKind switch
+        {
+            JsonValueKind.String => work.Description.GetString(),
+            JsonValueKind.Object when work.Description.TryGetProperty("value", out var v) => v.GetString(),
+            _ => null
+        };
+    }
 }

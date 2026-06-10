@@ -13,14 +13,17 @@ public class BookEmbedder
     }
     public async Task EmbedPendingAsync()
     {
-        var pendientes = _db.Books.Where(b => b.EmbeddingJson == null).Take(100).ToList();
+        var pendientes = _db.Books.Where(b => b.EmbeddingJson == null).Take(500).ToList();
+        int contador = 0;
         foreach (var book in pendientes)
         {
-            var texto = $"{book.Title} {book.Author}";
+            contador++;
+            if(contador % 25 == 0) _db.SaveChanges();
+            var texto = $"{book.Title} {book.Description ?? ""} ";
             var vector = await _embeddingClient.GetEmbeddingAsync(texto);
+            await Task.Delay(500);
             if (vector.Length == 0) continue;
             book.EmbeddingJson = JsonSerializer.Serialize(vector);
-
         }
         _db.SaveChanges();
     }

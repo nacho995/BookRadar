@@ -7,4 +7,5 @@ public class Book
     public string? Author { get; set; }
     public string? OpenLibraryKey { get; set; }
     public string? EmbeddingJson { get; set; }
+    public string? Description { get; set; }
 }

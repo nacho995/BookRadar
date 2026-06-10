@@ -11,6 +11,9 @@ var importer = new BookImporter(db);
 var generos = new[] { "fantasy", "fiction", "programming" };
 foreach (var genero in generos)
     importer.Import(await client.SearchBySubjectAsync(genero));
+var enricher = new BookEnricher(db, client);
+await enricher.EnrichPendingAsync();
+Console.WriteLine($"{db.Books.Count(b => b.Description != null)} libros con descripción");
 
 // 2. Embeber los pendientes
 var apiKey = Environment.GetEnvironmentVariable("GEMINI_API_KEY");
@@ -28,3 +31,4 @@ var recomendaciones = recommender.Recommend(referencia);
 Console.WriteLine($"\nPorque te gustó '{referencia.Title}':");
 foreach (var libro in recomendaciones)
     Console.WriteLine($"  - {libro.Title} ({libro.Author})");
+
