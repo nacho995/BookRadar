@@ -10,7 +10,6 @@ public class FakeHttpMessageHandler : HttpMessageHandler
     protected override Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        // devuelve la siguiente respuesta de la cola; si se acaban, una página vacía
         var json = _respuestas.Count > 0 ? _respuestas.Dequeue() : "{\"docs\":[]}";
         return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
         {

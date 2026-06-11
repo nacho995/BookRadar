@@ -1,0 +1,12 @@
+{
+  "name": "BookRadar",
+  "short_name": "BookRadar",
+  "description": "Tu recomendador semántico de libros",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0e16",
+  "theme_color": "#0b0e16",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

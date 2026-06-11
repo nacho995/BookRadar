@@ -1,5 +1,4 @@
 bin/
 obj/
-books.db
-
-.fake
+books.db*
+bookradar-web/

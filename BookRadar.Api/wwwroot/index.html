@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BookRadar — ¿qué leo ahora?</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#0b0e16">
+</head>
+<body>
+  <header class="hero">
+    <img src="icon.svg" alt="" class="logo">
+    <h1>BookRadar</h1>
+    <p class="tagline">Tu catálogo, mapeado por significado en 3.072 dimensiones.<br>Dime un libro que te marcó y te diré cuáles orbitan cerca.</p>
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="Busca un libro… (p. ej. Thinner)" autocomplete="off" autofocus>
+    </div>
+    <p id="status" class="muted" role="status"></p>
+  </header>
+
+  <main>
+    <section id="results" class="grid" aria-label="Resultados"></section>
+
+    <section id="recs-section" hidden>
+      <article id="ref-card">
+        <span id="ref-cover" class="cover cover-lg"></span>
+        <span class="ref-body">
+          <p class="ref-label">PORQUE TE GUSTÓ</p>
+          <h2 id="ref-title"></h2>
+          <p id="ref-author" class="muted"></p>
+          <p id="ref-desc"></p>
+        </span>
+      </article>
+      <h3 class="recs-heading">Los 5 más afines de tu catálogo</h3>
+      <div id="recs" class="grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="muted">Recomendador semántico · hecho por Ignacio Dalesio</p>
+    <p class="badges">
+      <span>ASP.NET Core</span><span>EF Core + SQLite</span><span>Gemini embeddings</span><span>similitud coseno</span><span>PWA</span>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
