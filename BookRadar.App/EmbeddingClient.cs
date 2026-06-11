@@ -31,6 +31,13 @@ public class EmbeddingClient{
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         var embeddingResponse = JsonSerializer.Deserialize<EmbeddingResponse>(responseJson, options);
 
+        var values = embeddingResponse?.Embedding?.Values;
+        if (values is null || values.Count == 0)
+        {
+            Console.WriteLine($"  ⚠ Gemini respondió: {responseJson[..Math.Min(300, responseJson.Length)]}");
+            return values?.ToArray() ?? Array.Empty<float>();
+        }
+
         return embeddingResponse?.Embedding?.Values?.ToArray() ?? Array.Empty<float>();
     }
 }

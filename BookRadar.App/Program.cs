@@ -26,6 +26,7 @@ Console.WriteLine($"{db.Books.Count(b => b.EmbeddingJson != null)} libros con em
 
 var recommender = new Recommender(db);
 var referencia = db.Books.First(b => b.EmbeddingJson != null);
+
 var recomendaciones = recommender.Recommend(referencia);
 
 Console.WriteLine($"\nPorque te gustó '{referencia.Title}':");
